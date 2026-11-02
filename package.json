@@ -1,0 +1,103 @@
+{
+  "name": "design-library",
+  "private": true,
+  "version": "1.2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web \"node --watch server/index.ts\" \"vite\"",
+    "build": "tsc --noEmit && vite build",
+    "start": "node server/index.ts",
+    "test": "node --test tests/*.test.ts",
+    "build:main": "esbuild electron/main.ts --bundle --platform=node --format=esm --target=node20 --external:electron --outfile=electron-build/main.mjs \"--banner:js=import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\"",
+    "app": "npm run build && npm run build:main && electron .",
+    "dist": "npm run build && npm run build:main && electron-builder --win"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans-arabic": "^5.3.0",
+    "@mlightcad/dxf-json": "^1.2.8",
+    "@mlightcad/libredwg-web": "^0.8.3",
+    "@tracespace/core": "5.0.0-alpha.0",
+    "@types/busboy": "^1.5.5",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "ag-psd": "^34.1.0",
+    "busboy": "^1.6.0",
+    "concurrently": "^10.0.6",
+    "electron": "^45.2.1",
+    "electron-builder": "^26.18.0",
+    "esbuild": "^0.28.2",
+    "express": "^5.3.0",
+    "jszip": "^3.10.2",
+    "occt-import-js": "^0.0.23",
+    "openscad-wasm-prebuilt": "1.2.0",
+    "pdfjs-dist": "^6.4.299",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0",
+    "typescript": "^7.0.2",
+    "utif2": "^4.1.0",
+    "vite": "^8.3.5"
+  },
+  "main": "electron-build/main.mjs",
+  "description": "Design Library",
+  "author": "Design Library contributors",
+  "build": {
+    "appId": "com.sameh.designlibrary",
+    "productName": "Design Library",
+    "directories": {
+      "output": "release",
+      "buildResources": "assets"
+    },
+    "files": [
+      "assets/icon.png",
+      "dist/**",
+      "electron-build/**",
+      "package.json",
+      "LICENSE"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Design Library",
+      "uninstallDisplayName": "Design Library",
+      "deleteAppDataOnUninstall": false
+    }
+  },
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samehmesrega/stl-cad-pcb-file-manager.git"
+  },
+  "homepage": "https://github.com/samehmesrega/stl-cad-pcb-file-manager",
+  "keywords": [
+    "stl",
+    "step",
+    "dxf",
+    "dwg",
+    "gcode",
+    "gerber",
+    "kicad",
+    "openscad",
+    "3d-printing",
+    "laser-cutting",
+    "cnc",
+    "pcb",
+    "file-manager",
+    "electron"
+  ]
+}
